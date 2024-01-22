@@ -1,7 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/creat-task-dto';
+import { GetTasksFilterDto } from './dto/get-Task-filter-dto';
 
 @Controller('tasks')  //organizing your application's API endpoints Marking a Class as a Controller:,  Specifying the Route Path:, Defining Route Handlers:... 
 export class TasksController { 
@@ -9,8 +10,12 @@ export class TasksController {
     constructor(private tasksService: TasksService){}
     
     @Get()
-    getAllTasks(): Task[] {
-        return this.tasksService.getAllTasks();
+    getTasks(@Query() filterDto: GetTasksFilterDto ): Task[] {
+        if (Object.keys(filterDto).length) {  //check if keys that we provide in Query are the same in filterDto
+            return this.tasksService.getTaskWithFilters(filterDto);
+        }else{
+            return this.tasksService.getAllTasks();
+        }
     }
 
     @Get('/:id')
