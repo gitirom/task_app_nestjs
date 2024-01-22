@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/creat-task-dto';
@@ -24,6 +24,8 @@ export class TasksController {
     }
 
     @Post()
+    //after put pipes in dto use it here
+    @UsePipes(ValidationPipe)
     createTask(
         // @Body('title') title: string, //It's a decorator used in NestJS controllers to extract data from the request body and bind it to a handler method's argument.
         // @Body('description') description: string,
