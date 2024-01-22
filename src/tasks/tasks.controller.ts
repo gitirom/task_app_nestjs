@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { TasksService } from './tasks.service';
-import { Task } from './task.model';
+import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/creat-task-dto';
 
 @Controller('tasks')  //organizing your application's API endpoints Marking a Class as a Controller:,  Specifying the Route Path:, Defining Route Handlers:... 
@@ -31,6 +31,14 @@ export class TasksController {
     deleteTask(@Param('id') id: string): void{
         this.tasksService.deleteTask(id);
         
+    }
+
+    @Patch('/update/:id/status')
+    updateTaskStatus(
+        @Param('id') id: string,  //@Param cause is URL param
+        @Body('status') status: TaskStatus //@Body extract body param
+        ): Task{
+            return this.tasksService.updateTaskStatus(id, status);
     }
 
     
