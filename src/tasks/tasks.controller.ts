@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Task } from './task.model';
 import { CreateTaskDto } from './dto/creat-task-dto';
 
-@Controller('tasks')
+@Controller('tasks')  //organizing your application's API endpoints Marking a Class as a Controller:,  Specifying the Route Path:, Defining Route Handlers:... 
 export class TasksController { 
     //inject instances of MyService into other components using constructor injection
     constructor(private tasksService: TasksService){}
@@ -11,6 +11,11 @@ export class TasksController {
     @Get()
     getAllTasks(): Task[] {
         return this.tasksService.getAllTasks();
+    }
+
+    @Get('/:id')
+    getTaskById(@Param('id') id: string ): Task{
+        return this.tasksService.getTaskById(id);  //getTaskById service !!
     }
 
     @Post()
@@ -22,6 +27,11 @@ export class TasksController {
         return this.tasksService.createTask(createTaskDto);
     }
 
+    @Delete('/delete/:id')
+    deleteTask(@Param('id') id: string): void{
+        this.tasksService.deleteTask(id);
+        
+    }
 
     
 }
