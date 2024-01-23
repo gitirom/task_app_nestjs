@@ -44,12 +44,8 @@ export class TasksService {
 
     //delete Task
     deleteTask(id: string): void{
-        // const index = this.tasks.findIndex(task => task.id === id);
-        // if (index > -1) {
-        //     const removedTask = this.tasks.splice(index, 1)[0];
-        //     return removedTask;
-        // }
-        this.tasks  = this.tasks.filter(task => task.id != id); //just when filter false , remove !
+        const found = this.getTaskById(id);
+        this.tasks  = this.tasks.filter(task => task.id != found.id); //just when filter false , remove !
     }
 
 
