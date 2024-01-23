@@ -3,6 +3,7 @@ import { TasksService } from './tasks.service';
 import { Task, TaskStatus } from './task.model';
 import { CreateTaskDto } from './dto/creat-task-dto';
 import { GetTasksFilterDto } from './dto/get-Task-filter-dto';
+import { TaskStatusValidationPipe } from './pipes/tasj-satatus-validation-pipe';
 
 @Controller('tasks')  //organizing your application's API endpoints Marking a Class as a Controller:,  Specifying the Route Path:, Defining Route Handlers:... 
 export class TasksController { 
@@ -43,7 +44,7 @@ export class TasksController {
     @Patch('/update/:id/status')
     updateTaskStatus(
         @Param('id') id: string,  //@Param cause is URL param
-        @Body('status') status: TaskStatus //@Body extract body param
+        @Body('status', TaskStatusValidationPipe) status: TaskStatus //@Body extract body param
         ): Task{
             return this.tasksService.updateTaskStatus(id, status);
     }
